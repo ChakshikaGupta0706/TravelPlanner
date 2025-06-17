@@ -1,6 +1,6 @@
 :root {
     --bg-primary: white;
-    --bg-secondary: #caa6fd;
+    --bg-secondary: #e1cdfd;
     --text-primary: #400865;
     --text-secondary: white;
 }
@@ -13,19 +13,20 @@
 
 html, body {
     height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+    width: 100%;
     font-family: 'Segoe UI', sans-serif;
     background-color: var(--bg-primary);
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 
 .navbar {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    height: 60px;
-    padding: 0 180px;
+    justify-content: center;
+    height: 70px;
     background: var(--bg-primary);
 }
 
@@ -35,47 +36,49 @@ html, body {
     font-weight: 650;
     color: var(--text-primary);
 }
-.logo i, .features i {
+ .logo i {
     padding-right:10px;
-}
-
-.features {
-    padding: 20px;
-}
-
-.features a {
-    text-decoration: None;
-    padding: 10px;
-    color: var(--text-primary);
-    font-weight: 550;
-    font-size: 20px;
-    transition: 0.5s ease-in-out;
-}
-.features a:hover {
-    font-size: 22px;
-    text-decoration: underline;
 }
 
 .dashboard {
     position: relative;
     width: 95%;
-    max-width: 1200px;
-    margin: 10px auto;
+    max-width: 1500px;
+    margin: 20px auto;
     border-radius: 20px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    min-height: calc(100vh - 90px);
+    justify-content: center;
+    padding: 20px;
+    background-image: url(dashbd-backgrnd.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-    height: calc(100vh - 90px);
-    justify-content: space-between ;
-    padding: 20px;
-    background-color: var(--bg-secondary);
-    border: 5px dashed var(--text-primary);
+    text-align: center;
+    align-items: center;
 }
-
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.comment2 {
+    color: white;
+    font-size: 60px;
+    font-weight: bolder;
+    text-align: center;
+}
+.mainpagebtn {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 .newtripbtn {
-    position: absolute;
-    top: 30px;
-    right: 30px;
     background-color: var(--text-secondary);
     color: var(--text-primary);
     border: None;
@@ -86,14 +89,8 @@ html, body {
     font-size: 20px;
     transition: transform 0.2s ease-in-out;
 }
-.newtripbtn:hover {
-    transform: scale(1.08);
-}
 
 .explorebtn {
-    position: absolute;
-    left: 30px;
-    top: 30px;
     border:None;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
@@ -105,59 +102,46 @@ html, body {
     color: white;
     transition: transform 0.2s ease-in-out;
 }
-.explorebtn:hover {
+
+
+.explorebtn:hover, .newtripbtn:hover {
     transform: scale(1.08)
 }
-
-.polaroid-gallery {
-    margin-top: 100px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-.polaroid {
-  background: white;
-  padding: 20px 20px 30px 20px;
-  border: 1px solid #ccc;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
-  width: 200px;
-  text-align: center;
-  transition: transform 0.3s ease;
-  border-radius: 4px;
-}
-
-.polaroid img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 4px;
-}
-
-.polaroid .caption {
-  margin-top: 8px;
-  font-size: 16px;
-  color: #333;
-  font-weight: 400;
-}
-
-/* Hover effect for fun */
-.polaroid:hover {
-  transform: rotate(-2deg) scale(1.05);
-}
-
-
-.comment {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+.comment1 {
     color: var(--text-primary);
     font-size: 20px;
     font-weight: 500;
     font-style: italic;
 }
 
-/*CSS commands for styling the page showing completed trips*/
+.features-container {
+    margin: 80px auto;
+    background-color:transparent;
+    display: flex;
+    padding: 40px 60px;
+    width: 95%;
+    max-width: 1500px;
+    justify-content: space-between;
+    border: None;
+    border-radius: 20px;
+}
+.feature {
+    background-color: var(--text-primary);
+    border-radius: 10px;
+    width: 250px;
+    height: 150px;
+    padding: 20px;
+    color: var(--text-secondary);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+.featuretext {
+    font-size: 19px;
+    font-weight: 400;
+    padding-top: 10px;
+}
+.feature i {
+    font-size: 22px;
+}
 
 .donetrips {
     position: relative;
