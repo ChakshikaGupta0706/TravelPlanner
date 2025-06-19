@@ -8,77 +8,214 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <navbar class="navbar">
-        <a href="index.html" class="logo"><i class="fa-regular fa-compass"></i>WanderWise</a>
-        <div>
-            <p class="comment1">Tracking every moment, every place that you cherished</p>
-        </div>
-    </navbar>
-    <section class="dashboard">
-        <div class="hero-content">
-            <div class="comment2">PLAN. TRAVEL. CHERISH.</div>
-            <div class="mainpagebtn">
-                <button class="explorebtn"><i class="fa-solid fa-location-dot"></i> Explore</button>
-                <button class="newtripbtn"><i class="fa-solid fa-plus"></i> Let's Plan another one</button>
+     <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="showDashboard()">
+            <i class="fa-regular fa-compass"></i>WanderWise
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+    </nav>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view">
+        <div class="comment1">Tracking every moment, every place that you cherished</div>
+        
+        <!-- Hero Section -->
+        <section class="dashboard">
+            <div class="hero-content">
+                <div class="comment2">PLAN. TRAVEL. CHERISH.</div>
+                <div class="mainpagebtn">
+                    <button class="explorebtn"><i class="fa-solid fa-location-dot"></i> Explore</button>
+                    <button class="newtripbtn" onclick="showNewTrip()"><i class="fa-solid fa-plus"></i> Let's Plan another one</button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="features-container">
-        <div class="feature">
-            <i class="fa-solid fa-dollar-sign"></i>
-            <div class="featuretext">Track your Trip Budget</div>
-        </div>
-        <div class="feature">
-            <i class="fa-regular fa-circle-check"></i>
-            <div class="featuretext">Visit Previous Trips</div>
-        </div>
-        <div class="feature">
-            <i class="fa-solid fa-earth-europe"></i>
-            <div class="featuretext">Itinerary Organisation</div>
-        </div>
-        <div class="feature">
-             <i class="fa-solid fa-note-sticky"></i>
-             <div class="featuretext">Take down Notes and status along the way</div>
-        </div>
-    </section>
-
-    <section class="donetrips">
-        <div class="heading-container">
-            <h2>Recent Trips</h2>
-            <div class="underline"></div>
-        </div>
-
-        <div class="trips-container">
-            <div class="trip-card">
-                <img src="trip1.jpg" alt="Trip to Manali">
-                <h3>Manali</h3>
-                <p class="time">Visited: Jan 2023</p>
-                <p class="description">Snowy adventures, hot Maggi at hilltops, and cozy cabins under starry skies...</p>
+        <!-- Features -->
+        <section class="features-container">
+            <div class="feature">
+                <i class="fa-solid fa-dollar-sign"></i>
+                <div class="featuretext">Track your Trip Budget</div>
             </div>
+            <div class="feature">
+                <i class="fa-regular fa-circle-check"></i>
+                <div class="featuretext">Visit Previous Trips</div>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-earth-europe"></i>
+                <div class="featuretext">Itinerary Organisation</div>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-note-sticky"></i>
+                <div class="featuretext">Take down Notes and status along the way</div>
+            </div>
+        </section>
 
-            <div class="trip-card">
-                <img src="trip2.jpg" alt="Trip to Goa">
-                <h3>Goa</h3>
-                <p class="time">Visited: Dec 2022</p>
-                <p class="description">Beach walks, seafood delights, and unforgettable sunsets along the Arabian Sea...</p>
+        <!-- Recent Trips -->
+        <section class="donetrips">
+            <div class="presentlocation">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'><rect fill='%23e2e8f0' width='200' height='120'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%2364748b' font-family='sans-serif' font-size='12'>No Image</text></svg>" alt="Current location">
+                <div>You're not on a trip right now!</div>
             </div>
 
-        <div class="trip-card">
-                <img src="trip3.jpg" alt="Trip to Jaipur">
-                <h3>Jaipur</h3>
-                <p class="time">Visited: Mar 2023</p>
-                <p class="description">Exploring forts, street shopping, and getting lost in the pink alleys of the city...</p>
-        </div>
+            <div class="heading-container">
+                <div class="heading">
+                    <h2>Recent Trips</h2>
+                    <a href="#">see more</a>
+                </div>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="trips-container">
+                <div class="trip-card">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 140'><rect fill='%236366f1' width='260' height='140'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='sans-serif' font-size='14'>Manali</text></svg>" alt="Trip to Manali">
+                    <div class="trip-card-content">
+                        <h3>Manali</h3>
+                        <p class="time">Visited: Jan 2023</p>
+                        <p class="description">Snowy adventures, hot Maggi at hilltops, and cozy cabins under starry skies...</p>
+                    </div>
+                </div>
 
-        <div class="trip-card">
-                <img src="trip3.jpg" alt="Trip to Jaipur">
-                <h3>Jaipur</h3>
-                <p class="time">Visited: Mar 2023</p>
-                <p class="description">Exploring forts, street shopping, and getting lost in the pink alleys of the city...</p>
+                <div class="trip-card">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 140'><rect fill='%2306b6d4' width='260' height='140'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='sans-serif' font-size='14'>Goa</text></svg>" alt="Trip to Goa">
+                    <div class="trip-card-content">
+                        <h3>Goa</h3>
+                        <p class="time">Visited: Dec 2022</p>
+                        <p class="description">Beach walks, seafood delights, and unforgettable sunsets along the Arabian Sea...</p>
+                    </div>
+                </div>
+
+                <div class="trip-card">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 140'><rect fill='%23ec4899' width='260' height='140'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='sans-serif' font-size='14'>Jaipur</text></svg>" alt="Trip to Jaipur">
+                    <div class="trip-card-content">
+                        <h3>Jaipur</h3>
+                        <p class="time">Visited: Mar 2023</p>
+                        <p class="description">Exploring forts, street shopping, and getting lost in the pink alleys of the city...</p>
+                    </div>
+                </div>
+
+                <div class="trip-card">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 140'><rect fill='%2310b981' width='260' height='140'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='sans-serif' font-size='14'>Kerala</text></svg>" alt="Trip to Kerala">
+                    <div class="trip-card-content">
+                        <h3>Kerala</h3>
+                        <p class="time">Visited: Apr 2023</p>
+                        <p class="description">Backwater cruises, spice gardens, and serene moments in God's own country...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- New Trip View -->
+    <div id="newtrip-view" style="display: none;">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Plan Your Next Adventure</h1>
+                <p class="page-subtitle">Create memories that will last a lifetime</p>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Trip Details
+                </h2>
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" id="destination" placeholder="Where are you going?">
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date">
+                </div>
+                <div class="form-group">
+                    <label for="end-date">End Date</label>
+                    <input type="date" id="end-date">
+                </div>
+                <div class="form-group">
+                    <label for="trip-type">Trip Type</label>
+                    <select id="trip-type">
+                        <option value="">Select trip type</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="relaxation">Relaxation</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="business">Business</option>
+                        <option value="family">Family</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-users"></i>
+                    Travel Companions
+                </h2>
+                <div class="form-group">
+                    <label for="travelers">Number of Travelers</label>
+                    <input type="number" id="travelers" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="budget">Estimated Budget</label>
+                    <input type="number" id="budget" placeholder="Enter amount">
+                </div>
+                <div class="form-group">
+                    <label for="accommodation">Accommodation Preference</label>
+                    <select id="accommodation">
+                        <option value="">Select accommodation</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="hostel">Hostel</option>
+                        <option value="airbnb">Airbnb</option>
+                        <option value="resort">Resort</option>
+                        <option value="camping">Camping</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-sticky-note"></i>
+                    Travel Notes
+                </h2>
+                <div class="form-group">
+                    <label for="local-tips">Local Tips & Recommendations</label>
+                    <textarea id="local-tips" rows="4" placeholder="Things to remember, local customs, recommended restaurants, hidden gems..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="important-info">Important Information</label>
+                    <textarea id="important-info" rows="3" placeholder="Emergency contacts, booking confirmations, addresses..."></textarea>
+                </div>
+            </div>
+
+            <button class="save-trip-btn" onclick="saveTrip()">
+                <i class="fas fa-save"></i> Save My Trip
+            </button>
         </div>
-        </div>
-    </section>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="showDashboard()">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explore</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showNewTrip()">
+            <i class="fas fa-plus"></i>
+            <span>Plan</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Saved</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
     <script href="app.js"></script>
 </body>
 </html>
