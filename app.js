@@ -1,46 +1,57 @@
-// Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const themeIcon = document.getElementById('theme-icon');
-            
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                themeIcon.className = 'fas fa-moon';
-                localStorage.setItem('theme', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fas fa-sun';
-                localStorage.setItem('theme', 'dark');
-            }
-        }
+const themeSwitch = document.getElementById('theme-icon');
 
-        // Load saved theme
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const themeIcon = document.getElementById('theme-icon');
-            
-            if (savedTheme === 'dark') {
-                document.body.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fas fa-sun';
-            }
-        }
+const toggleTheme = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-        // Navigation
-        function showDashboard() { 
-            document.getElementById('dashboard-view').style.display = 'block';
-            document.getElementById('newtrip-view').style.display = 'none';
-            updateActiveNav(0);
-        }
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+};
 
-        function showNewTrip() {
-            document.getElementById('dashboard-view').style.display = 'none';
-            document.getElementById('newtrip-view').style.display = 'block';
-            updateActiveNav(2);
-        }
+const updateThemeIcon = (theme) => {
+    const icon = document.getElementById('theme-icon').querySelector('i');
+    if (theme === 'dark') {
+        icon.className = 'fas fa-sun'; 
+    } else {
+        icon.className = 'fas fa-moon'; 
+    }
+};
 
-        function updateActiveNav(index) {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach((item, i) => {
-                if (i === index) {
-                    item.classList.add('active');
-                } else {
+const initializeTheme = () => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme();
+});
+themeSwitch.addEventListener('click', toggleTheme);
+
+
+//To add the attractions to the list
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('attraction-input');
+  const button = document.getElementById('add-attraction-btn');
+  const list = document.getElementById('attraction-list');
+
+  const addAttraction = () => {
+    const value = input.value.trim();
+    if (value !== '') {
+      const li = document.createElement('li');
+      li.textContent = value;
+      list.appendChild(li);
+      input.value = '';
+    }
+  };
+
+  button.addEventListener('click', addAttraction);
+
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      addAttraction();
+    }
+  });
+});

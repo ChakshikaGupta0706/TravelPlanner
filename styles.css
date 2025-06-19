@@ -1,5 +1,4 @@
 :root {
-            /* Light Theme */
             --bg-primary: #ffffff;
             --bg-secondary: #f8fafc;
             --bg-card: #ffffff;
@@ -15,7 +14,6 @@
         }
 
         [data-theme="dark"] {
-            /* Dark Theme */
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --bg-card: #334155;
@@ -45,7 +43,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Mobile Navigation */
         .navbar {
             background: var(--navbar-bg);
             backdrop-filter: blur(20px);
@@ -100,25 +97,26 @@
             font-weight: 500;
             text-align: center;
             margin-bottom: 10px;
+            margin-top: 10px;
         }
 
         /* Dashboard Hero Section */
         .dashboard {
-    position: relative;
-    margin: 20px;
-    border-radius: 24px;
-    padding: 40px 20px;
-    text-align: center;
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-image: url(dashbd-backgrnd.jpg);
-    background-size: cover;      /* or use 'contain' depending on your goal */
-    background-repeat: no-repeat;
-    background-position: center center;
-    overflow: hidden;
-}
+           position: relative;
+           margin: 20px;
+           border-radius: 24px;
+           padding: 40px 20px;
+           text-align: center;
+           min-height: 320px;
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           background-image: url(dashbd-backgrnd.jpg);
+           background-size: cover;      /* or use 'contain' depending on your goal */
+           background-repeat: no-repeat;
+           background-position: center center;
+           overflow: hidden;
+        }
 
 
         .dashboard::before {
@@ -227,7 +225,7 @@
         /* Recent Trips Section */
         .donetrips {
             background: var(--bg-secondary);
-            margin: 20px 20px 0;
+            margin: 20px 20px 50px;
             border-radius: 24px 24px 0 0;
             padding: 24px 20px;
             min-height: 60vh;
@@ -318,7 +316,7 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 4px 12px var(--shadow);
-            transition: all 0.3s ease;
+            transition: 0.3s ease;
             flex: 0 0 260px;
             scroll-snap-align: start;
         }
@@ -462,9 +460,30 @@
             box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
         }
 
+        .add-attraction-btn {
+            border: none;
+            border-radius: 100%;
+            padding: 10px;
+            margin: 10px;
+            background-color: var(--accent-primary);
+        }
+
+        .attraction-list {
+            list-style: none;
+            margin-top: 15px;
+            padding-left: 0;
+        }
+        .attraction-list li {
+            background-color: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            margin-left: 10px;
+        }
+
         .save-trip-btn {
             width: 100%;
-            background: var(--accent-gradient);
+            background: var(--accent-secondary);
             color: white;
             border: none;
             padding: 16px;
