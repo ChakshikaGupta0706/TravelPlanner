@@ -31,27 +31,36 @@ document.addEventListener('DOMContentLoaded', () => {
 themeSwitch.addEventListener('click', toggleTheme);
 
 
-//To add the attractions to the list
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('attraction-input');
-  const button = document.getElementById('add-attraction-btn');
-  const list = document.getElementById('attraction-list');
+//Conneting to mongodb database
+const { connectToDatabase } = require('./db');
+const { saveTrip, getAllTrips } = require('./services/tripService');
 
-  const addAttraction = () => {
-    const value = input.value.trim();
-    if (value !== '') {
-      const li = document.createElement('li');
-      li.textContent = value;
-      list.appendChild(li);
-      input.value = '';
+connectToDatabase();
+
+async function handleSaveTrip(tripData) {
+    try {
+        const savedTrip = await saveTrip(tripData);
+        console.log('Trip Saved Successfully;', savedTrip);
+
+        displayTrips();
+    } catch (error) {
+        console.error('Failed to save trip:', error);
     }
-  };
+}
 
-  button.addEventListener('click', addAttraction);
+async function displayTrips() {
+    try {
+        const trips = await getAllTrips();
 
-  input.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      addAttraction();
+        const tripsContainer = document.getElementById('saved-trips');
+        tripsContainer.innerHTML = trips.map(trip => `
+            <div class="trip-card">
+            <h3>${trip.title}</h3>
+            <p>Destination: ${trip.destination}</p>
+            <p>Dates: ${trip.startDate} - ${trip.endDate}</p>
+            </div>
+            `).join('');
+    } catch (error) {
+        console.error('Failed to load trips:', error);
     }
-  });
-});
+}
