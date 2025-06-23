@@ -1,3 +1,5 @@
+//Toggle theme updates, initializes and switches the theme
+
 const themeSwitch = document.getElementById('theme-icon');
 
 const toggleTheme = () => {
@@ -31,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
 themeSwitch.addEventListener('click', toggleTheme);
 
 
-//Conneting to mongodb database
-const { connectToDatabase } = require('./db');
+//Connecting to mongodb database
+const { connectToDatabase } = require('./config/db');
 const { saveTrip, getAllTrips } = require('./services/tripService');
 
 connectToDatabase();

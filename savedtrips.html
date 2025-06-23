@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>PlanWise-Your Ultimate Digital Travel Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-regular fa-compass"></i>WanderWise
+        </a>
+        <button class="theme-toggle" id="theme-icon">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+    
+    <section id="savedTrips" class="savedTripscontainer">
+        <div id="tripsContainer">
+            <div class="tripCard">
+                <img src="#">
+                <h3>Harshil Valley</h3>
+                <div class="date">Date: 15.03.2025 to 17.03.2025</div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="showDashboard()">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explore</span>
+        </a>
+        <a href="newtrip.html" class="nav-item" onclick="showNewTrip()">
+            <i class="fas fa-plus"></i>
+            <span>Plan</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Saved</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+    
+    <script src="app.js"></script>
+</body>
+</html>

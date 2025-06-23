@@ -1,51 +1,32 @@
-const express = require('express');
-const path = require('path');
-const { connectToDatabase } = require('./db');
-const { saveTrip, getAllTrips, getTripById, updateTrip, deleteTrip } = require('./services/tripService');
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+
+import { connectDB } from "./config/db.js";
+
+import tripRoutes from "./routes/trip.route.js"
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
+const _dirname = path.resolve();
+
+connectDB();
 
 app.use(express.json());
-app.use(express.static('public'));
 
-connectToDatabase();
+app.use("/api/trips", tripRoutes);
 
-app.get('/api/trips', async (req,res) => {
-    try {
-        const trips = await getAllTrips();
-        res.json(trips);
-    } catch (error) {
-        res.status(500).json({error: "Failed to fetch Trips"});
-    }
-});
-
-app.post('/api/trips', async (req, res) => {
-    try {
-        const trip = await getTripById(req.params.id);
-        if (!trip) {
-            return res.status(404).json({error: 'Trip not found:'});
-        }
-        res.json(trip);
-
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to update trip'});
-    }
-});
-
-app.delete('/api/trips/:id', async (req, res) => {
-  try {
-    await deleteTrip(req.params.id);
-    res.json({ message: 'Trip deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to delete trip' });
-  }
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(_dirname, "/frontend/dist")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
+    });
+}
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+    connectDB();
+    console.log("Server started at http://localhost:" + PORT);
+})
