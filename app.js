@@ -33,36 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
 themeSwitch.addEventListener('click', toggleTheme);
 
 
-//Connecting to mongodb database
-const { connectToDatabase } = require('./config/db');
-const { saveTrip, getAllTrips } = require('./services/tripService');
+//Saving Planned Trips
+function saveTrip() {
+    const destination = document.getElementById("destination").value;
+    const startDate = document.getElementById("start-date").value;
+    const endDate = document.getElementById("end-date").value;
+    const thoughts = document.getElementById("local-tips").value;
 
-connectToDatabase();
+    const tripCard = document.createElement("div");
+    tripCard.classList.add("tripCard");
+    tripCard.innerHTML = `
+      <img src="#" alt="${destination} Image">
+      <label class="heartcheckbox"><input type="checkbox"/><i class="fa-regular fa-heart unchecked"></i><i class="fa-solid fa-heart checked"></i></label>
+      <div class="tripdetails">
+        <h3>${destination}</h3>
+        <div class="date">Planned for: ${startDate} to ${endDate}</div>
+        <div class="thoughts">${thoughts}</div>
+      </div>
+    `;
 
-async function handleSaveTrip(tripData) {
-    try {
-        const savedTrip = await saveTrip(tripData);
-        console.log('Trip Saved Successfully;', savedTrip);
-
-        displayTrips();
-    } catch (error) {
-        console.error('Failed to save trip:', error);
-    }
-}
-
-async function displayTrips() {
-    try {
-        const trips = await getAllTrips();
-
-        const tripsContainer = document.getElementById('saved-trips');
-        tripsContainer.innerHTML = trips.map(trip => `
-            <div class="trip-card">
-            <h3>${trip.title}</h3>
-            <p>Destination: ${trip.destination}</p>
-            <p>Dates: ${trip.startDate} - ${trip.endDate}</p>
-            </div>
-            `).join('');
-    } catch (error) {
-        console.error('Failed to load trips:', error);
-    }
+    document.getElementById("savedTrips").appendChild(tripCard);
 }
