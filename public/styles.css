@@ -385,25 +385,6 @@
             font-size: 14px;
         }
 
-        .back-btn {
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-
         .form-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -427,11 +408,11 @@
             color: var(--accent-primary);
         }
 
-        .form-group {
+        .form-group, .form-groupfull-width {
             margin-bottom: 16px;
         }
 
-        .form-group label {
+        .form-group label, .form-groupfull-width label {
             display: block;
             font-weight: 500;
             color: var(--text-primary);
@@ -440,6 +421,8 @@
         }
 
         .form-group input,
+        .form-groupfull-width input,
+        .form-groupfull-width textarea,
         .form-group select,
         .form-group textarea {
             width: 100%;
@@ -452,34 +435,25 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus,
+        .form-group input:focus, 
+        .form-groupfull-width input:focus,
         .form-group select:focus,
-        .form-group textarea:focus {
+        .form-groupfull-width textarea:focus {
             outline: none;
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
         }
 
-        .add-attraction-btn {
-            border: none;
-            border-radius: 100%;
-            padding: 10px;
-            margin: 10px;
+        .activities-input {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-small {
+            width: 80px;
+            border-radius: 10px;
             background-color: var(--accent-primary);
-        }
-
-        .attraction-list {
-            list-style: none;
-            margin-top: 15px;
-            padding-left: 0;
-        }
-        .attraction-list li {
-            background-color: #f0f0f0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            margin-left: 10px;
-        }
+            border: none;
+            color: white; font-weight: 500; font-size: 15px;}
 
         .save-trip-btn {
             width: 100%;

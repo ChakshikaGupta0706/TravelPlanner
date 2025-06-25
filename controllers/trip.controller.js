@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Product from "../models/trip.model.js"
 import Trip from "../models/trip.model.js";
 
 export const getAllTrips = async (req, res) => {
@@ -13,7 +12,7 @@ export const getAllTrips = async (req, res) => {
 };
 
 export const saveTrip = async (req, res) => {
-	const trip = req.body; // user will send this data
+	const trip = req.body;
 
 	if (!trip.title || !trip.destination || !trip.startDate || !trip.endDate || !trip.budget) {
 		return res.status(400).json({ success: false, message: "Please provide all fields" });
@@ -55,7 +54,7 @@ export const deleteTrip = async (req, res) => {
 	}
 
 	try {
-		await Product.findByIdAndDelete(id);
+		await Trip.findByIdAndDelete(id);
 		res.status(200).json({ success: true, message: "Trip deleted" });
 	} catch (error) {
 		console.log("error in deleting trip:", error.message);
