@@ -1,0 +1,25 @@
+# Ignore node modules (dependency folder)
+node_modules/
+
+# Ignore environment variables (e.g., secrets, DB URIs)
+.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+logs/
+npm-debug.log*
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore build or cache folders (if you use any frontend framework)
+dist/
+build/
+.cache/
+
+# Ignore uploads or user-generated content (optional)
+uploads/
