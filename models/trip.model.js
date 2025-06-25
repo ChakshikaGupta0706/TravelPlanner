@@ -6,8 +6,9 @@ const tripSchema = new mongoose.Schema({
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     budget: { type: Number },
+    image: String,
     activities: [String],
-    notes: String,
+    localTips: String,
 });
 
 const Trip = mongoose.model("Trip", tripSchema);
