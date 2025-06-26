@@ -6,7 +6,7 @@ const tripSchema = new mongoose.Schema({
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     budget: { type: Number },
-    image: { type:String },
+    image: { type: String },
     activities: [String],
     travelers: { type: Number },
     accommodation: { type: String },
