@@ -229,3 +229,250 @@ window.removeActivity = removeActivity;
 
 // Load trips when page loads
 document.addEventListener('DOMContentLoaded', fetchTrips);
+
+
+
+//Explore trip locations via map
+const map = L.map('map').setView([28.6139, 77.2090], 5);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            let places = [];
+            let searchTimeout;
+            let currentSearchMarker = null;
+
+            // Initialize with some sample data that will persist
+            function initializePlaces() {
+                // This simulates persistent data - in a real app you'd use localStorage
+                if (!window.persistentPlaces) {
+                    window.persistentPlaces = [
+                        { name: "Delhi", status: "Visited", lat: 28.6139, lng: 77.2090 },
+                        { name: "Mumbai", status: "Future", lat: 19.0760, lng: 72.8777 },
+                        { name: "Udaipur", status: "Visited", lat: 24.5854, lng: 73.7125 }
+                    ];
+                }
+                loadPlaces();
+            }
+
+            // Search functionality
+            async function searchPlaces(query) {
+                if (query.length < 3) {
+                    hideSearchResults();
+                    return;
+                }
+
+                showLoading();
+
+                try {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1`);
+                    const results = await response.json();
+                    displaySearchResults(results);
+                } catch (error) {
+                    console.error('Search error:', error);
+                    hideSearchResults();
+                }
+            }
+
+            function showLoading() {
+                const resultsDiv = document.getElementById('searchResults');
+                resultsDiv.innerHTML = '<div class="loading">Searching...</div>';
+                resultsDiv.style.display = 'block';
+            }
+
+            function hideSearchResults() {
+                const resultsDiv = document.getElementById('searchResults');
+                resultsDiv.style.display = 'none';
+            }
+
+            function displaySearchResults(results) {
+                const resultsDiv = document.getElementById('searchResults');
+                
+                if (results.length === 0) {
+                    resultsDiv.innerHTML = '<div class="loading">No results found</div>';
+                    return;
+                }
+
+                resultsDiv.innerHTML = '';
+                
+                results.forEach(result => {
+                    const item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    item.innerHTML = `<strong>${result.display_name}</strong>`;
+                    
+                    item.onclick = () => {
+                        selectSearchResult(result);
+                    };
+                    
+                    resultsDiv.appendChild(item);
+                });
+                
+                resultsDiv.style.display = 'block';
+            }
+
+            function selectSearchResult(result) {
+                const lat = parseFloat(result.lat);
+                const lng = parseFloat(result.lon);
+                
+                // Remove previous search marker if exists
+                if (currentSearchMarker) {
+                    map.removeLayer(currentSearchMarker);
+                }
+                
+                // Add temporary search marker
+                currentSearchMarker = L.marker([lat, lng], {
+                    icon: L.icon({
+                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    })
+                }).addTo(map);
+                
+                // Add popup with option to save
+                currentSearchMarker.bindPopup(`
+                    <div>
+                        <strong>${result.display_name}</strong><br>
+                        <button onclick="saveSearchedPlace('${result.display_name.replace(/'/g, "\\'")}', ${lat}, ${lng})" 
+                                style="margin-top: 8px; padding: 5px 10px; background: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                            Save this place
+                        </button>
+                    </div>
+                `).openPopup();
+                
+                // Zoom to location
+                map.setView([lat, lng], 13);
+                
+                // Hide search results
+                hideSearchResults();
+                document.getElementById('searchInput').value = '';
+            }
+
+            function saveSearchedPlace(name, lat, lng) {
+                const status = prompt("Enter status (e.g., 'Visited', 'Future', 'Planning'):", "Future");
+                if (!status) return;
+
+                // Remove search marker
+                if (currentSearchMarker) {
+                    map.removeLayer(currentSearchMarker);
+                    currentSearchMarker = null;
+                }
+
+                // Add permanent marker
+                const marker = L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`<strong>${name}</strong><br>Status: ${status}<br>Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`);
+
+                places.push({ name, status, lat, lng, marker });
+                updatePlacesList();
+                savePlaces();
+            }
+
+            // Load places from persistent storage
+            function loadPlaces() {
+                places = [...window.persistentPlaces];
+                places.forEach(place => {
+                    const marker = L.marker([place.lat, place.lng]).addTo(map)
+                        .bindPopup(`<strong>${place.name}</strong><br>Status: ${place.status}<br>Lat: ${place.lat.toFixed(4)}, Lng: ${place.lng.toFixed(4)}`);
+                    place.marker = marker;
+                });
+                updatePlacesList();
+            }
+
+            // Save places to persistent storage
+            function savePlaces() {
+                window.persistentPlaces = places.map(place => ({
+                    name: place.name,
+                    status: place.status,
+                    lat: place.lat,
+                    lng: place.lng
+                }));
+            }
+
+            function updatePlacesList() {
+                const list = document.getElementById('placeItems');
+                list.innerHTML = '';
+                places.forEach((place, index) => {
+                    const li = document.createElement('li');
+                    const info = document.createElement('div');
+                    info.className = 'place-info';
+                    info.innerHTML = `<strong>${place.name}</strong><br>
+                                      Status: ${place.status}<br>
+                                      Lat: ${place.lat.toFixed(4)}, Lng: ${place.lng.toFixed(4)}`;
+
+                    const btn = document.createElement('button');
+                    btn.innerText = 'Remove';
+                    btn.className = 'remove-btn';
+                    btn.onclick = () => {
+                        map.removeLayer(place.marker);
+                        places.splice(index, 1);
+                        updatePlacesList();
+                        savePlaces();
+                    };
+
+                    li.appendChild(info);
+                    li.appendChild(btn);
+                    list.appendChild(li);
+                });
+            }
+
+            function clearAllPlaces() {
+                if (confirm('Are you sure you want to remove all places?')) {
+                    places.forEach(place => {
+                        map.removeLayer(place.marker);
+                    });
+                    places = [];
+                    window.persistentPlaces = [];
+                    updatePlacesList();
+                }
+            }
+
+            map.on('click', function(e) {
+                // Hide search results if clicking on map
+                hideSearchResults();
+                
+                const { lat, lng } = e.latlng;
+                const name = prompt("Enter place name:");
+                if (!name) return;
+
+                const status = prompt("Enter status (e.g., 'Visited', 'Future', 'Planning'):");
+                if (!status) return;
+
+                const marker = L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`<strong>${name}</strong><br>Status: ${status}<br>Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`);
+
+                places.push({ name, status, lat, lng, marker });
+                updatePlacesList();
+                savePlaces();
+            });
+
+            // Search input event listeners
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                
+                // Clear previous timeout
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
+                }
+                
+                // Set new timeout for search (debounce)
+                searchTimeout = setTimeout(() => {
+                    searchPlaces(query);
+                }, 300);
+            });
+
+            // Hide search results when clicking outside
+            document.addEventListener('click', function(e) {
+                const searchContainer = document.querySelector('.search-container');
+                if (!searchContainer.contains(e.target)) {
+                    hideSearchResults();
+                }
+            });
+
+            // Expose saveSearchedPlace to global scope for onclick
+            window.saveSearchedPlace = saveSearchedPlace;
+
+            // Load places when page loads
+            initializePlaces();
