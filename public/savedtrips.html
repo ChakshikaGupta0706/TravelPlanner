@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <title>PlanWise-Your Ultimate Digital Travel Planner</title>
+    <title>WanderWise-Your Ultimate Digital Travel Planner</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
@@ -16,34 +16,44 @@
             <i class="fas fa-moon"></i>
         </button>
     </nav>
-    
-    <section id="tripsContainer" class="savedTripscontainer">
-            <div class="tripCard">
-                <img src="#">
-                <label class="heartcheckbox"><input type="checkbox"/><i class="fa-regular fa-heart unchecked"></i><i class="fa-solid fa-heart checked"></i></label>
-                <div class="tripdetails">
+    <div class="savednrecent">
+        <div class="heading-container">
+            <div class="heading">
+                <h2>Saved</h2>
+            </div>
+            <div class="underline"></div>
+        </div>
+    <section id="tripsContainer" class="trips-container">
+        <div class="trip-card">
+            <img src="#">
+            <label class="heartcheckbox"><input type="checkbox"/><i class="fa-regular fa-heart unchecked"></i><i class="fa-solid fa-heart checked"></i></label>
+            <div class="trip-card-content">
                 <h3>Harshil Valley</h3>
-                <div class="date">Planned for: 15.03.2025 to 17.03.2025</div>
-                <div class="thoughts">Have to visit Mukhwa and Gangotri mandatorily. besbcibeifbsfobcosb</div>
-                </div>
+                <p class="time">Planned for: 15.03.2025 to 17.03.2025</p>
+                <p class="description">Have to visit Mukhwa and Gangotri mandatorily. besbcibeifbsfobcosb</p>
             </div>
-            <div class="tripCard">
-                <img src="#">
-                <label class="heartcheckbox"><input type="checkbox"/><i class="fa-regular fa-heart unchecked"></i><i class="fa-solid fa-heart checked"></i></label>
-                <div class="tripdetails">
-                <h3>Meghalaya</h3>
-                <div class="date">Planned for: 24.06.2025 to 17.06.2025</div>
-                <div class="thoughts">A must during the monsoon. Prepare eulogy cause you might drown.</div>
-                </div>
-            </div>
+        </div>
     </section>
+        <div class="heading-container">
+            <div class="heading">
+                <h2>Recent</h2>
+            </div>
+            <div class="underline"></div>
+        </div>
+    <section id="recenttrips" class="trips-container">
+        <div class="trip-card">
+
+        </div>
+
+    </section>
+    </div>
 
     <nav class="bottom-nav">
         <a href="index.html" class="nav-item active" onclick="showDashboard()">
             <i class="fas fa-home"></i>
             <span>Home</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="explore.html" class="nav-item">
             <i class="fas fa-search"></i>
             <span>Explore</span>
         </a>
@@ -51,7 +61,7 @@
             <i class="fas fa-plus"></i>
             <span>Plan</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="savedtrips.html" class="nav-item">
             <i class="fas fa-heart"></i>
             <span>Saved</span>
         </a>

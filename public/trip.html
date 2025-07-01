@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WanderWise-Your Ultimate Digital Travel Planner</title>
+        <link rel="stylesheet" href="styles.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="https://api.apilayer.com/exchangerates_data/latest?base=USD">
+    </head>
+    <body>
+        <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-regular fa-compass"></i>WanderWise
+        </a>
+        <button class="theme-toggle" id="theme-icon">
+            <i class="fas fa-moon"></i>
+        </button>
+        </nav>
+
+        <div id="info">
+            <img src="#">
+            <h2 id="title" class="triptitle">Mid-Sem Trip</h2>
+            <h3>Harshil Valley</h3>
+            <p id="time">Date: March 15, 2025 to March 17, 2025</p>
+            <p id="travelers">Travelling with: Friends!</p>
+        </div>
+        <div id="files">
+            <h3><i class="fa-solid fa-suitcase"></i>Mandatory to Pack</h3>
+            <div class="file-content">
+                <ul><li>Visa</li><br><li>Passport</li></ul>
+            </div>
+        </div>
+        <div id="stay">
+            <h3><i class="fa-solid fa-hotel"></i>Accommodation & Reviews</h3>
+            <div id="accommodation">Rama Homestay</div>
+        </div>
+        <div id="activities">
+            <h3><i class="fa-solid fa-map-location-dot"></i>Attractions</h3>
+            <ul><li>Lama Top</li><br><li>Gangotri</li></ul>
+        </div>
+        <div id="expenses">
+            <h3><i class="fa-solid fa-coins"></i>Expenses Tracker</h3>
+            <div class="currencyconvert">
+                <label>Amount: </label>
+                <input type="number" id="amount" placeholder="Enter amount" /><br/><br/>
+  
+                 <label>From: </label>
+                <select id="from-currency"></select><br/><br/>
+
+                <label>To: </label>
+                <select id="to-currency"></select><br/><br/>
+   
+                <button onclick="convertCurrency()">Convert</button>
+  
+                <div id="result" style="margin-top: 10px; font-weight: bold;"></div>
+            </div>
+
+            <div class="expensestracker">
+                <div class="table-container">
+                <h3 class="tableheading">Expenses</h3>
+                <table class="table" id="table">
+                    <thead>        
+                        <tr>        
+                            <th>Item</th>    
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+                <div id="no-expenses" class="no-expenses">
+                    <p>No money spent yet!</p>
+                </div>
+                </div>
+
+                 <div class="form-container">
+                <h4>Add an Expense</h4>
+                <form id="passform">
+                    <div class="form-group">
+                        <label for="item">
+                            <i class="fas fa-shopping-cart"></i> Item
+                        </label>
+                        <input type="text" id="item" name="item" required placeholder="Where did the money go?">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="spenddate">
+                            <i class="fas fa-calendar"></i> Date
+                        </label>
+                        <input type="date" id="spenddate" name="spenddate" required placeholder="Date on which you spent!">
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="category">
+                            <i class="fas fa-tags"></i> Category
+                        </label>
+                        <input type="text" id="category" name="category" required placeholder="Like Accommodation, Food, Transport, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">
+                            <i class="fa-solid fa-indian-rupee-sign"></i> Amount
+                        </label>
+                        <input type="number" id="price" name="price" required placeholder="How much did it cost?">
+                    </div>
+                    
+                    <button type="submit" id="expense">
+                        <i class="fas fa-save"></i> Save 
+                    </button>
+                </form>
+            </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

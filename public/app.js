@@ -104,13 +104,13 @@ if (activityInput) {
 function createTripCard(trip) {
     const imageUrl = trip.image?.trim() || 'https://via.placeholder.com/300x200?text=No+Image';
     return `
-        <div class="tripCard">
+        <div class="trip-card">
            <img src="${imageUrl}" alt="${trip.title}" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found';">
            <label class="heartcheckbox"><input type="checkbox"/><i class="fa-regular fa-heart unchecked"></i><i class="fa-solid fa-heart checked"></i></label>
-           <div class="tripdetails">
+           <div class="trip-card-content">
            <h3>${trip.destination}</h3>
-           <div class="date">Planned for: ${formatDate(trip.startDate)} to ${formatDate(trip.endDate)} </div>
-           <div class="thoughts">${trip.localTips || 'No additional notes'}</div>
+           <p class="time">Planned for: ${formatDate(trip.startDate)} to ${formatDate(trip.endDate)} </p>
+           <p class="description">${trip.localTips || 'No additional notes'}</p>
            </div>
         </div>
     `;
@@ -476,3 +476,118 @@ const map = L.map('map').setView([28.6139, 77.2090], 5);
 
             // Load places when page loads
             initializePlaces();
+
+
+
+// Expenses Tracker
+//Currency Converter
+const apiKey = '98c0c25b199a6cab58f3e536'; // 🔁 Replace with your key
+
+async function loadCurrencies() {
+  try {
+    const response = await fetch('https://api.apilayer.com/exchangerates_data/latest?base=USD', {
+      headers: {
+        'apikey': apiKey
+      }
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const currencies = Object.keys(data.rates);
+
+    const fromSelect = document.getElementById('from-currency');
+    const toSelect = document.getElementById('to-currency');
+
+    currencies.forEach(currency => {
+      const option1 = new Option(currency, currency);
+      const option2 = new Option(currency, currency);
+      fromSelect.add(option1);
+      toSelect.add(option2);
+    });
+
+    fromSelect.value = 'USD';
+    toSelect.value = 'INR';
+  } catch (error) {
+    console.error('Failed to load currencies:', error);
+    document.getElementById('result').textContent = 'Failed to load currencies';
+  }
+}
+
+async function convertCurrency() {
+  const amount = parseFloat(document.getElementById('amount').value);
+  const from = document.getElementById('from-currency').value;
+  const to = document.getElementById('to-currency').value;
+
+  if (!amount || isNaN(amount)) {
+    alert("Enter a valid amount.");
+    return;
+  }
+
+  try {
+    const url = `https://api.apilayer.com/exchangerates_data/latest?base=${from}`;
+    const response = await fetch(url, {
+      headers: {
+        'apikey': apiKey
+      }
+    });
+
+    const data = await response.json();
+    const rate = data.rates[to];
+    const converted = (amount * rate).toFixed(2);
+
+    document.getElementById('result').textContent = `${amount} ${from} = ${converted} ${to}`;
+  } catch (error) {
+    console.error('Conversion failed:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadCurrencies);
+
+
+//Expenses Tracker
+ let expenses = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    const expenseForm = document.getElementById('passform');
+    const tableBody = document.getElementById('tableBody');
+    const noExpensesSection = document.getElementById('no-expenses');
+
+    const renderExpenses = (expenseList) => {
+        tableBody.innerHTML = '';
+
+        if (expenseList.length === 0) {
+            noExpensesSection.style.display = 'block';
+            return;
+        }
+
+        noExpensesSection.style.display = 'none';
+
+        expenseList.forEach((exp, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+               <td>${exp.item}</td>
+               <td>${exp.spenddate}</td>
+               <td>${exp.category}</td>
+               <td>${parseFloat(exp.price).toFixed(2)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    };
+
+    expenseForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const item = document.getElementById('item').value;
+        const category = document.getElementById('category').value;
+        const spenddate = document.getElementById('spenddate').value;
+        const price = document.getElementById('price').value;
+
+        expenses.push({item, category, spenddate, price});
+        renderExpenses(expenses);
+        expenseForm.reset();
+    });
+    renderExpenses(expenses);
+});
