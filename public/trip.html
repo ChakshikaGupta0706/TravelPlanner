@@ -20,10 +20,10 @@
 
         <div id="info">
             <img src="#">
-            <h2 id="title" class="triptitle">Mid-Sem Trip</h2>
-            <h3>Harshil Valley</h3>
-            <p id="time">Date: March 15, 2025 to March 17, 2025</p>
-            <p id="travelers">Travelling with: Friends!</p>
+            <h2 id="title" class="triptitle"></h2>
+            <h3 id="destination"></h3>
+            <p id="time"></p>
+            <p id="travelers"></p>
         </div>
         <div id="files">
             <h3><i class="fa-solid fa-suitcase"></i>Mandatory to Pack</h3>
@@ -33,11 +33,18 @@
         </div>
         <div id="stay">
             <h3><i class="fa-solid fa-hotel"></i>Accommodation & Reviews</h3>
-            <div id="accommodation">Rama Homestay</div>
+            <div id="accommodation">
+                <input id="hotelname" type="text" name="hotelname" placeholder="Where're you staying?" required>
+                <textarea id="review" placeholder="How do you rate the stay?"></textarea>
+            </div>
         </div>
         <div id="activities">
             <h3><i class="fa-solid fa-map-location-dot"></i>Attractions</h3>
-            <ul><li>Lama Top</li><br><li>Gangotri</li></ul>
+            <ul id="attraction-list"></ul>
+            <div class="add-attraction">
+                <input type="text" id="attraction-input" placeholder="Add new attraction">
+                <button onclick="addAttraction()">Add</button>
+            </div>
         </div>
         <div id="expenses">
             <h3><i class="fa-solid fa-coins"></i>Expenses Tracker</h3>
@@ -112,6 +119,21 @@
             </div>
             </div>
         </div>
+
+        <div class="itinerarycontainer">
+            <h3>Itinerary</h3>
+            <div class="content">
+                <div id="days-container">
+                    <!-- Days will be added here -->
+                </div>
+            
+                <button class="add-day-btn" onclick="addDay()">
+                <i class="fas fa-plus"></i> Add Day
+                </button>
+            </div>
+        </div>
+
+        <button id="savetripdetails" class="savetripdetailsbtn">Save</button>
         <script src="script.js"></script>
     </body>
 </html>

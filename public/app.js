@@ -104,7 +104,7 @@ if (activityInput) {
 function createTripCard(trip) {
     const imageUrl = trip.image?.trim() || 'https://via.placeholder.com/300x200?text=No+Image';
     return `
-        <div class="trip-card">
+        <div class="trip-card" data-tripid="${trip._id}">
            <img src="${imageUrl}" alt="${trip.title}" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found';">
            <label class="heartcheckbox"><input type="checkbox"/><i class="fa-regular fa-heart unchecked"></i><i class="fa-solid fa-heart checked"></i></label>
            <div class="trip-card-content">
@@ -129,6 +129,12 @@ async function fetchTrips() {
                 tripsContainer.innerHTML = '<div class="no-trips">No trips found. Add your first trip above!</div>';
             } else {
                 tripsContainer.innerHTML = result.data.map(createTripCard).join('');
+                document.querySelectorAll('.trip-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const tripId = card.getAttribute('data-tripid');
+                        window.location.href = `trip.html?tripId=${tripId}`;
+                    });
+                });
             }
         } else {
             tripsContainer.innerHTML = '<div class="error">Error loading trips</div>';
@@ -152,6 +158,8 @@ async function addTrip(formData) {
         const result = await response.json();
         
         if (result.success) {
+            const newTripId = result.data._id;
+            window.location.href = `trip.html?tripId=${newTripId}`;
             showMessage('Trip added successfully!', 'success');
             if (tripForm) {
                 tripForm.reset();
@@ -546,48 +554,3 @@ async function convertCurrency() {
 
 document.addEventListener('DOMContentLoaded', loadCurrencies);
 
-
-//Expenses Tracker
- let expenses = [];
-
-document.addEventListener('DOMContentLoaded', () => {
-    const expenseForm = document.getElementById('passform');
-    const tableBody = document.getElementById('tableBody');
-    const noExpensesSection = document.getElementById('no-expenses');
-
-    const renderExpenses = (expenseList) => {
-        tableBody.innerHTML = '';
-
-        if (expenseList.length === 0) {
-            noExpensesSection.style.display = 'block';
-            return;
-        }
-
-        noExpensesSection.style.display = 'none';
-
-        expenseList.forEach((exp, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-               <td>${exp.item}</td>
-               <td>${exp.spenddate}</td>
-               <td>${exp.category}</td>
-               <td>${parseFloat(exp.price).toFixed(2)}</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    };
-
-    expenseForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const item = document.getElementById('item').value;
-        const category = document.getElementById('category').value;
-        const spenddate = document.getElementById('spenddate').value;
-        const price = document.getElementById('price').value;
-
-        expenses.push({item, category, spenddate, price});
-        renderExpenses(expenses);
-        expenseForm.reset();
-    });
-    renderExpenses(expenses);
-});

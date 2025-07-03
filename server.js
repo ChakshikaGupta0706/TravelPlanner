@@ -8,6 +8,7 @@ import multer from "multer";
 
 import { connectDB } from "./config/db.js";
 import tripRoutes from "./routes/trip.route.js";
+import tripDetailsRoutes from "./routes/tripDetails.route.js";
 
 // Load environment variables
 dotenv.config();
@@ -54,6 +55,7 @@ app.get('/api/test', (req, res) => {
 
 // Routes
 app.use("/api/trips", tripRoutes);
+app.use("/api/tripDetails", tripDetailsRoutes);
 
 // 404 handler
 app.use((req, res, next) => {
