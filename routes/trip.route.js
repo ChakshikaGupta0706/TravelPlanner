@@ -53,4 +53,15 @@ router.post("/", upload.single('image'), saveTrip); // Add multer middleware
 router.put("/:id", upload.single('image'), updateTrip); // Add multer middleware
 router.delete("/:id", deleteTrip);
 
+router.get('/:tripId', async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.tripId);
+    if (!trip) return res.status(404).json({ success: false, message: 'Trip not found' });
+    res.json({ success: true, data: trip });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error fetching trip' });
+  }
+});
+
+
 export default router;

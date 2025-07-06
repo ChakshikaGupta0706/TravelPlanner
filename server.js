@@ -54,7 +54,7 @@ app.get('/api/test', (req, res) => {
 });
 
 // Routes
-app.use("/api/trips", tripRoutes);
+app.use("/api/trip", tripRoutes);
 app.use("/api/tripDetails", tripDetailsRoutes);
 
 // 404 handler

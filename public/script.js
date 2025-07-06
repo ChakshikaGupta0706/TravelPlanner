@@ -38,34 +38,35 @@ let days = [];
 
 async function loadTripDetails(tripId) {
     try {
-        const response = await fetch(`/api/tripDetails/${tripId}`);
-        const result = await response.json();
-
-        const trip = result.data;
+        const tripResponse = await fetch(`/api/trip/${tripId}`);
+        const trip = (await tripResponse.json()).data;
 
         document.getElementById('title').textContent = trip.title || 'Trip';
-        document.getElementById('destination').textContent = trip.destination || '';
-        document.getElementById('time').textContent = `Date: ${formatDate(trip.startDate)} to ${formatDate(trip.endDate)}`;
+        document.getElementById('destination').textContent = trip.destination || 'Trip';
+        document.getElementById('time').textContent = `Date: ${formatDate(trip.startDate)} to ${formatDate(trip.endDate)}` || 'Trip';
         document.getElementById('travelers').textContent = `Travelling with: ${trip.travelCompanions || 'N/A'}`;
        
         document.querySelector('#info img').src = trip.image || 'https://via.placeholder.com/400x200?text=No+Image';
 
-        const listContainer = document.querySelector('#files ul');
-        listContainer.innerHTML = (trip.packingList || []).map(item => `<li>${item}</li><br>`).join('');
+        const detailsResponse = await fetch(`/api/tripDetails/${tripId}`);
+        const details = (await detailsResponse.json()).data;
 
-        document.getElementById('hotelname').value = trip.hotelName || '';
-        document.getElementById('review').value = trip.stayReview || '';
+        const listContainer = document.querySelector('#files ul');
+        listContainer.innerHTML = (details.packingList || []).map(item => `<li>${item}</li><br>`).join('');
+
+        document.getElementById('hotelname').value = details.hotelName || '';
+        document.getElementById('review').value = details.stayReview || '';
 
         const attractionList = document.getElementById('attraction-list');
         attractionList.innerHTML = '';
-        (trip.attractions || []).forEach(addAttractionToDOM);
+        (details.attractions || []).forEach(addAttractionToDOM);
 
-        expenses = trip.expenses || [];
+        expenses = details.expenses || [];
         renderExpenses(expenses);
 
         days = [];
         dayCount = 0;
-        (trip.itinerary || []).forEach(dayObj => {
+        (details.itinerary || []).forEach(dayObj => {
             dayCount++;
             days.push({ id: dayCount, activities: dayObj.activities });
         });
@@ -124,7 +125,7 @@ if (saveBtn) {
 function collectExpenses() {
     return Array.from(document.querySelectorAll('#table tbody tr')).map(row => ({
         item: row.cells[0].textContent,
-        date: row.cells[1].textContent,
+        date: new Date(row.cells[1].textContent),
         category: row.cells[2].textContent,
         amount: row.cells[3].textContent
     }));
@@ -168,7 +169,7 @@ if (expenseForm) {
         const category = document.getElementById('category').value;
         const spenddate = document.getElementById('spenddate').value;
         const price = document.getElementById('price').value;
-        expenses.push({ item, category, spenddate, price });
+        expenses.push({ item, category, date: spenddate, amount: parseFloat(price) });
         renderExpenses(expenses);
         expenseForm.reset();
     });

@@ -34,7 +34,7 @@ if (themeSwitch) {
     themeSwitch.addEventListener('click', toggleTheme);
 }
 
-const API_BASE = '/api/trips';
+const API_BASE = '/api/trip';
 let activities = [];
 
 // DOM elements

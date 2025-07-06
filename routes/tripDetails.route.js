@@ -1,10 +1,17 @@
-const express = require('express');
+import express from 'express';
+import multer from 'multer';
+import {
+  getCombinedTripInfo,
+  saveTripDetails,
+  updateDetails,
+  markCompleted
+} from '../controllers/tripDetails.controller.js';
+
 const router = express.Router();
-const controller = require('../controllers/tripDetailsController');
 
-router.get('/api/tripDetails/:tripId', tripDetailsController.getCombinedTripInfo);
-router.put('/api/tripDetails/:tripId', saveTripDetails);
+router.get('/tripDetails/:tripId', getCombinedTripInfo);
+router.put('/:tripId', saveTripDetails);
 router.put('/:tripId', updateDetails);
-router.put('/:tripId/complete', controller.markCompleted);
+router.put('/:tripId/complete', markCompleted);
 
-module.exports = router;
+export default router;

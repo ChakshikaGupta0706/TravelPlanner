@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const tripDetailsSchema = new mongoose.Schema({
     tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true },
     mandatoryItems: [String],
     hotelName: String,
-    review: String,
+    stayReview: String,
     attractions: [String],
     expenses: [{
         item: String,
-        date: Date,
+        spenddate: Date,
         category: String,
         amount: Number
     }],
@@ -19,4 +19,5 @@ const tripDetailsSchema = new mongoose.Schema({
     completed: { type: Boolean, default: false }
 });
 
-module.exports = mongoose.model('TripDetails', tripDetailsSchema);
+const TripDetails = mongoose.model('TripDetails', tripDetailsSchema);
+export default TripDetails;

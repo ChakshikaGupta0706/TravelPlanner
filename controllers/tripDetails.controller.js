@@ -1,7 +1,8 @@
-const Trip = require('../models/trip.model.js')
-const TripDetails = require('../models/tripDetails.model.js');
+import mongoose from "mongoose";
+import Trip from "../models/trip.model.js";
+import TripDetails from "../models/tripDetails.model.js";
 
-exports.getCombinedTripInfo = async (req, res) => {
+export const getCombinedTripInfo = async (req, res) => {
     const {tripId} = req.params;
     try {
         const trip = await Trip.findById(tripId);
@@ -19,7 +20,7 @@ exports.getCombinedTripInfo = async (req, res) => {
     }
 };
 
-exports.saveTripDetails = async (req, res) => {
+export const saveTripDetails = async (req, res) => {
     const { tripId } = req.params;
 
     try {
@@ -35,7 +36,7 @@ exports.saveTripDetails = async (req, res) => {
 };
 
 // Create new details
-exports.createDetails = async (req, res) => {
+export const createDetails = async (req, res) => {
     try {
         const newDetails = new TripDetails(req.body);
         await newDetails.save();
@@ -46,7 +47,7 @@ exports.createDetails = async (req, res) => {
 };
 
 // Get details by tripId
-exports.getDetails = async (req, res) => {
+export const getDetails = async (req, res) => {
     try {
         const details = await TripDetails.findOne({ tripId: req.params.tripId });
         if (!details) return res.status(404).json({ message: "Not found" });
@@ -57,7 +58,7 @@ exports.getDetails = async (req, res) => {
 };
 
 // Update tripDetails
-exports.updateDetails = async (req, res) => {
+export const updateDetails = async (req, res) => {
     try {
         const updated = await TripDetails.findOneAndUpdate(
             { tripId: req.params.tripId },
@@ -71,7 +72,7 @@ exports.updateDetails = async (req, res) => {
 };
 
 // Mark trip as completed
-exports.markCompleted = async (req, res) => {
+export const markCompleted = async (req, res) => {
     try {
         const updated = await TripDetails.findOneAndUpdate(
             { tripId: req.params.tripId },
@@ -84,3 +85,5 @@ exports.markCompleted = async (req, res) => {
     }
 };
 
+export const getTripDetails = getCombinedTripInfo;
+export const markTripCompleted = markCompleted;
