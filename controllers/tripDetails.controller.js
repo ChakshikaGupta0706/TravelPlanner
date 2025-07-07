@@ -3,20 +3,21 @@ import Trip from "../models/trip.model.js";
 import TripDetails from "../models/tripDetails.model.js";
 
 export const getCombinedTripInfo = async (req, res) => {
-    const {tripId} = req.params;
     try {
+        const {tripId} = req.params;
         const trip = await Trip.findById(tripId);
-        const tripDetails = await TripDetails.findOne({ tripId });
+        const tripDetails = await TripDetails.findOne({ tripId: new mongoose.Types.ObjectId(tripId) });
 
-        if (!trip) return res.status(404).json({ success: false, message: "Trip not found"});
-        const combined = {
-            ...trip.toObject(),
-            ...(tripDetails ? tripDetails.toObject() : {})
+        console.log("Fetching combined tripinfo for tripId:", tripId);
+
+        if (!trip) {
+            return res.status(404).json({ success: false, message: 'Trip not found' })
         };
-        res.json({ success: true, data: combined });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Server Error" });
+
+         return res.json({ success: true, data: { trip, tripDetails: tripDetails || {} } });
+    } catch (err) {
+        console.error('Error fetching combined trip info:', err);
+        return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 };
 
@@ -84,6 +85,3 @@ export const markCompleted = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
-export const getTripDetails = getCombinedTripInfo;
-export const markTripCompleted = markCompleted;

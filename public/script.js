@@ -38,18 +38,17 @@ let days = [];
 
 async function loadTripDetails(tripId) {
     try {
-        const tripResponse = await fetch(`/api/trip/${tripId}`);
-        const trip = (await tripResponse.json()).data;
+        const response = await fetch(`/api/tripDetails/combined/${tripId}`);
+        const result = await response.json();
+        if (!result.success) throw new Error('Trip fetch failed');
+
+        const {trip, tripDetails} = result.data;
 
         document.getElementById('title').textContent = trip.title || 'Trip';
         document.getElementById('destination').textContent = trip.destination || 'Trip';
-        document.getElementById('time').textContent = `Date: ${formatDate(trip.startDate)} to ${formatDate(trip.endDate)}` || 'Trip';
-        document.getElementById('travelers').textContent = `Travelling with: ${trip.travelCompanions || 'N/A'}`;
-       
+        document.getElementById('time').textContent = `Date: ${formatDate(trip.startDate)} to ${formatDate(trip.endDate)}`;
+        document.getElementById('travelers').textContent = `Travelling with: ${trip.travelers|| 'N/A'}`;
         document.querySelector('#info img').src = trip.image || 'https://via.placeholder.com/400x200?text=No+Image';
-
-        const detailsResponse = await fetch(`/api/tripDetails/${tripId}`);
-        const details = (await detailsResponse.json()).data;
 
         const listContainer = document.querySelector('#files ul');
         listContainer.innerHTML = (details.packingList || []).map(item => `<li>${item}</li><br>`).join('');
@@ -59,14 +58,14 @@ async function loadTripDetails(tripId) {
 
         const attractionList = document.getElementById('attraction-list');
         attractionList.innerHTML = '';
-        (details.attractions || []).forEach(addAttractionToDOM);
+        (tripDetails.attractions || []).forEach(addAttractionToDOM);
 
-        expenses = details.expenses || [];
+        expenses = tripDetails.expenses || [];
         renderExpenses(expenses);
 
         days = [];
         dayCount = 0;
-        (details.itinerary || []).forEach(dayObj => {
+        (tripDetails.itinerary || []).forEach(dayObj => {
             dayCount++;
             days.push({ id: dayCount, activities: dayObj.activities });
         });
@@ -78,7 +77,7 @@ async function loadTripDetails(tripId) {
     }
 }
 
-if (tripId) loadTripDetails(tripId);
+if (tripId) {loadTripDetails(tripId)};
 
 function addAttraction() {
     const input = document.getElementById('attraction-input');

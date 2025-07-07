@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.get('/tripDetails/:tripId', getCombinedTripInfo);
+router.get('/combined/:tripId', getCombinedTripInfo);
 router.put('/:tripId', saveTripDetails);
 router.put('/:tripId', updateDetails);
 router.put('/:tripId/complete', markCompleted);
