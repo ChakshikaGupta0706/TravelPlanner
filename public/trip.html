@@ -16,124 +16,210 @@
         <button class="theme-toggle" id="theme-icon">
             <i class="fas fa-moon"></i>
         </button>
-        </nav>
-
-        <div id="info">
+        </nav>        
+    <div class="trip-hero">
+        <div id="info" class="info">
             <img src="#">
-            <h2 id="title" class="triptitle"></h2>
-            <h3 id="destination"></h3>
-            <p id="time"></p>
-            <p id="travelers"></p>
         </div>
-        <div id="files">
-            <h3><i class="fa-solid fa-suitcase"></i>Mandatory to Pack</h3>
-            <div class="file-content">
-                <ul><li>Visa</li><br><li>Passport</li></ul>
+        <div class="trip-hero-content">
+            <h1 class="trip-title" id="title"></h1>
+            <h2 class="trip-subtitle" id="destination"></h2>
+            <div class="trip-details">
+                <span id="time"><i class="fas fa-calendar"></i></span>
+                <span id="travelers"><i class="fas fa-users"></i></span>
             </div>
         </div>
-        <div id="stay">
-            <h3><i class="fa-solid fa-hotel"></i>Accommodation & Reviews</h3>
-            <div id="accommodation">
-                <input id="hotelname" type="text" name="hotelname" placeholder="Where're you staying?" required>
-                <textarea id="review" placeholder="How do you rate the stay?"></textarea>
-            </div>
-        </div>
-        <div id="activities">
-            <h3><i class="fa-solid fa-map-location-dot"></i>Attractions</h3>
-            <ul id="attraction-list"></ul>
-            <div class="add-attraction">
-                <input type="text" id="attraction-input" placeholder="Add new attraction">
-                <button onclick="addAttraction()">Add</button>
-            </div>
-        </div>
-        <div id="expenses">
-            <h3><i class="fa-solid fa-coins"></i>Expenses Tracker</h3>
-            <div class="currencyconvert">
-                <label>Amount: </label>
-                <input type="number" id="amount" placeholder="Enter amount" /><br/><br/>
-  
-                 <label>From: </label>
-                <select id="from-currency"></select><br/><br/>
+    </div>
 
-                <label>To: </label>
-                <select id="to-currency"></select><br/><br/>
-   
-                <button onclick="convertCurrency()">Convert</button>
-  
-                <div id="result" style="margin-top: 10px; font-weight: bold;"></div>
-            </div>
-
-            <div class="expensestracker">
-                <div class="table-container">
-                <h3 class="tableheading">Expenses</h3>
-                <table class="table" id="table">
-                    <thead>        
-                        <tr>        
-                            <th>Item</th>    
-                            <th>Date</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-                <div id="no-expenses" class="no-expenses">
-                    <p>No money spent yet!</p>
-                </div>
+     <div class="tripinfocontainer">
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Accommodation Reviews -->
+                <div class="info-section">
+                    <div class="section-header">
+                        <i class="fa-solid fa-hotel"></i>
+                        <h3>Accommodation Reviews</h3>
+                    </div>
+                    <div class="accommodation-form">
+                        <input id="hotelname" type="text" placeholder="Where're you staying?" required>
+                        <textarea id="review" placeholder="How do you rate the stay?"></textarea>
+                    </div>
                 </div>
 
-                 <div class="form-container">
-                <h4>Add an Expense</h4>
-                <form id="passform">
-                    <div class="form-group">
-                        <label for="item">
-                            <i class="fas fa-shopping-cart"></i> Item
-                        </label>
-                        <input type="text" id="item" name="item" required placeholder="Where did the money go?">
+                <!-- Mandatory to Pack -->
+                <div class="info-section">
+                    <div class="section-header">
+                        <i class="fa-solid fa-suitcase"></i>
+                        <h3>Mandatory to Pack</h3>
                     </div>
-        
-                    <div class="form-group">
-                        <label for="spenddate">
-                            <i class="fas fa-calendar"></i> Date
-                        </label>
-                        <input type="date" id="spenddate" name="spenddate" required placeholder="Date on which you spent!">
+                    <div id="files" class="file-content">
+                        <ul>
+                        </ul>
                     </div>
-        
-                    <div class="form-group">
-                        <label for="category">
-                            <i class="fas fa-tags"></i> Category
-                        </label>
-                        <input type="text" id="category" name="category" required placeholder="Like Accommodation, Food, Transport, etc.">
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Itinerary -->
+                <div class="info-section">
+                    <div class="itinerary-container">
+                        <div class="itinerary-header">
+                            <h3>Itinerary</h3>
+                        </div>
+                        <div class="itinerary-content">
+                            <div id="days-container">
+                                <div class="day-section">
+                                    <div class="day-header" onclick="toggleDay(this)">
+                                        <div class="day-number">
+                                            <i class="fas fa-calendar-day"></i>
+                                            <span>Day 1</span>
+                                        </div>
+                                        <i class="fas fa-chevron-down toggle-icon"></i>
+                                    </div>
+                                    <div class="day-content">
+                                        <div class="day-inner">
+                                            <ul class="activity-list">
+                                                <li class="activity-item"></li>
+                                            <div class="add-activity">
+                                                <input type="text" placeholder="Add activity">
+                                                <button onclick="addActivity(this)">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-day-btn" onclick="addDay()">
+                                <i class="fas fa-plus"></i> Add Day
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="price">
-                            <i class="fa-solid fa-indian-rupee-sign"></i> Amount
-                        </label>
-                        <input type="number" id="price" name="price" required placeholder="How much did it cost?">
+                </div>
+
+                <!-- Attractions -->
+                <div class="info-section">
+                    <div class="section-header">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <h3>Attractions</h3>
+                    </div>
+                    <div class="attractions-section">
+                        <ul id="attraction-list" class="attraction-list">
+                            <li class="attraction-item"></li>
+                        </ul>
+                        <div class="add-attraction">
+                            <input type="text" id="attraction-input" placeholder="Add new attraction">
+                            <button onclick="addAttraction()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expenses Tracker - Full Width -->
+        <div class="info-section full-width-section">
+            <div class="section-header">
+                <i class="fa-solid fa-coins"></i>
+                <h3>Expenses Tracker</h3>
+            </div>
+            
+            <div class="expenses-tracker">
+                <!-- Currency Converter -->
+                <div class="currency-converter">
+                    <div>
+                        <label>Amount:</label>
+                        <input type="number" id="amount" placeholder="Enter amount" />
                     </div>
                     
-                    <button type="submit" id="expense">
-                        <i class="fas fa-save"></i> Save 
-                    </button>
-                </form>
-            </div>
-            </div>
-        </div>
+                    <div>
+                        <label>From:</label>
+                        <select id="from-currency">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="INR">INR</option>
+                        </select>
+                    </div>
 
-        <div class="itinerarycontainer">
-            <h3>Itinerary</h3>
-            <div class="content">
-                <div id="days-container">
-                    <!-- Days will be added here -->
+                    <div>
+                        <label>To:</label>
+                        <select id="to-currency">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="INR">INR</option>
+                        </select>
+                    </div>
+
+                    <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+                    <div id="result" class="conversion-result"></div>
                 </div>
-            
-                <button class="add-day-btn" onclick="addDay()">
-                <i class="fas fa-plus"></i> Add Day
-                </button>
+
+                <!-- Form and Table -->
+                <div class="expenses-bottom">
+                    <!-- Expense Form -->
+                    <div class="expense-form">
+                        <h4>Add an Expense</h4>
+                        <form id="passform">
+                            <div class="form-group">
+                                <label for="item">
+                                    <i class="fas fa-shopping-cart"></i> Item
+                                </label>
+                                <input type="text" id="item" name="item" required placeholder="Where did the money go?">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="spenddate">
+                                    <i class="fas fa-calendar"></i> Date
+                                </label>
+                                <input type="date" id="spenddate" name="spenddate" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">
+                                    <i class="fas fa-tags"></i> Category
+                                </label>
+                                <input type="text" id="category" name="category" required placeholder="Like Accommodation, Food, Transport, etc.">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="price">
+                                    <i class="fa-solid fa-indian-rupee-sign"></i> Amount
+                                </label>
+                                <input type="number" id="price" name="price" required placeholder="How much did it cost?">
+                            </div>
+                            
+                            <button type="submit" class="expense-submit-btn">
+                                <i class="fas fa-save"></i>  Save Expense
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Expenses Table -->
+                    <div class="table-container">
+                        <div class="table-header">Expenses</div>
+                        <div id="no-expenses" style="display: none; color: var(--text-primary); text-align: center; padding: 10px;">
+                         No expenses added yet!
+                         </div>
+                        <table class="table" id="table">
+                            <thead>        
+                                <tr>        
+                                    <th>Item</th>    
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="tripbtns">
+        <button id="tripcompleted"><i class="fa-regular fa-circle-check"></i> Trip Completed!</button>
+        <button id="savetripdetails"><i class="fas fa-save"></i> Save Details</button>
+    </div>
 
-        <button id="savetripdetails" class="savetripdetailsbtn">Save</button>
-        <script src="script.js"></script>
+    <script src="script.js"></script>
     </body>
 </html>

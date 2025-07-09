@@ -6,6 +6,7 @@ const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', newTheme);
     updateThemeIcon(newTheme);
+    localStorage.setItem('theme', newTheme);
 };
 
 const updateThemeIcon = (theme) => {
@@ -14,7 +15,7 @@ const updateThemeIcon = (theme) => {
 };
 
 const initializeTheme = () => {
-    const savedTheme = 'light'; // default
+    const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 };
@@ -51,10 +52,10 @@ async function loadTripDetails(tripId) {
         document.querySelector('#info img').src = trip.image || 'https://via.placeholder.com/400x200?text=No+Image';
 
         const listContainer = document.querySelector('#files ul');
-        listContainer.innerHTML = (details.packingList || []).map(item => `<li>${item}</li><br>`).join('');
+        listContainer.innerHTML = (tripDetails.packingList || []).map(item => `<li>${item}</li><br>`).join('');
 
-        document.getElementById('hotelname').value = details.hotelName || '';
-        document.getElementById('review').value = details.stayReview || '';
+        document.getElementById('hotelname').value = tripDetails.hotelName || '';
+        document.getElementById('review').value = tripDetails.stayReview || '';
 
         const attractionList = document.getElementById('attraction-list');
         attractionList.innerHTML = '';

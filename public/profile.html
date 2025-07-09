@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div id="profile-section">
+  <p id="username"></p>
+  <button onclick="logout()">Logout</button>
+</div>
+<script>
+  const token = localStorage.getItem('token');
+  if (token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    document.getElementById('profile-section').style.display = 'block';
+    document.getElementById('username').textContent = `Welcome, ${payload.username || 'User'}`;
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    window.location.reload();
+  }
+</script>
+
+    </body>
+</html>

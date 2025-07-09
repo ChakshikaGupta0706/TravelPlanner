@@ -6,8 +6,8 @@ const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
     document.documentElement.setAttribute('data-theme', newTheme);
-    // Note: Removed localStorage usage as it's not supported in artifacts
     updateThemeIcon(newTheme);
+    localStorage.setItem('theme', newTheme);
 };
 
 const updateThemeIcon = (theme) => {
@@ -20,8 +20,7 @@ const updateThemeIcon = (theme) => {
 };
 
 const initializeTheme = () => {
-    // Default to light theme since localStorage is not available
-    const savedTheme = 'light';
+    const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 };
