@@ -47,10 +47,10 @@ app.use((req, res, next) => {
 app.use('/uploads', express.static(uploadsDir));
 
 // Serve static files for your frontend
-app.use(express.static(path.join(__dirname, 'public')));
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "auth.html"));
 });
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Test route
 app.get('/api/test', (req, res) => {
