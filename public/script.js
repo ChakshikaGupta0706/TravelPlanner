@@ -30,6 +30,82 @@ function formatDate(dateStr) {
     return isNaN(d.getTime()) ? 'N/A' : d.toLocaleDateString('en-IN');
 }
 
+//authentication forms
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
+const loginError = document.getElementById("login-error");
+const signupError = document.getElementById("signup-error");
+
+// Handle Signup
+signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("signup-username").value;
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+
+  try {
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert("Signup successful! Please login.");
+      signupForm.style.display = "none";
+      signupError.textContent = "";
+    } else {
+      signupError.textContent = result.message || "Signup failed.";
+    }
+  } catch (err) {
+    signupError.textContent = "Server error. Try again.";
+  }
+});
+
+// Handle Login
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert("Login successful!");
+      localStorage.setItem("token", result.token); // optional
+      window.location.href = "/index.html";   // redirect after login
+    } else {
+      loginError.textContent = result.message || "Login failed.";
+    }
+  } catch (err) {
+    loginError.textContent = "Server error. Try again.";
+  }
+});
+
+function toggleForms(showSignup) {
+    signupForm.style.display = showSignup ? "block" : "none";
+    loginForm.style.display = showSignup ? "none" : "block";
+};
+
+function logout() {
+    localStorage.removeItem("token");
+    window.location.replace("/auth.html");
+}
+const currentPage = window.location.pathname;
+if (
+  ['/savedtrips.html', '/trip.html', '/profile.html', '/index.html'].includes(currentPage) &&
+  !localStorage.getItem("token")
+) {
+  window.location.href = "/auth.html";
+}
+
 // Global variables
 const urlParams = new URLSearchParams(window.location.search);
 const tripId = urlParams.get('tripId');

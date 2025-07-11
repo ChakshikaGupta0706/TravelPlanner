@@ -9,6 +9,7 @@ import multer from "multer";
 import { connectDB } from "./config/db.js";
 import tripRoutes from "./routes/trip.route.js";
 import tripDetailsRoutes from "./routes/tripDetails.route.js";
+import authRoutes from "./routes/auth.route.js"
 
 // Load environment variables
 dotenv.config();
@@ -47,6 +48,9 @@ app.use('/uploads', express.static(uploadsDir));
 
 // Serve static files for your frontend
 app.use(express.static(path.join(__dirname, 'public')));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "auth.html"));
+});
 
 // Test route
 app.get('/api/test', (req, res) => {
@@ -56,6 +60,7 @@ app.get('/api/test', (req, res) => {
 // Routes
 app.use("/api/trip", tripRoutes);
 app.use("/api/tripDetails", tripDetailsRoutes);
+app.use("/api/auth", authRoutes);
 
 // 404 handler
 app.use((req, res, next) => {
